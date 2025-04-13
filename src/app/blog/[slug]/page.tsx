@@ -1,5 +1,5 @@
 import { getPostData, getSortedPostsData } from '@/lib/blog'
-import Image from 'next/image'
+import { Metadata } from 'next'
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData()
@@ -8,39 +8,23 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const post = await getPostData(params.slug)
   return {
     title: `${post.title} | Vivek Mali`,
-    description: post.excerpt,
+    description: post.description || post.excerpt || 'Read this blog post by Vivek Mali',
   }
 }
 
 export default async function BlogPost({ params }: { params: { slug: string } }) {
   const post = await getPostData(params.slug)
-
   return (
-    <article className="container mx-auto px-4 py-12">
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-        <p className="text-muted-foreground">{post.date}</p>
-      </header>
-
-      {post.coverImage && (
-        <div className="relative w-full h-[400px] mb-8">
-          <Image
-            src={post.coverImage}
-            alt={post.title}
-            fill
-            className="object-cover rounded-lg"
-          />
-        </div>
-      )}
-
-      <div
-        className="prose prose-lg dark:prose-invert max-w-none"
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
+    <article className="prose prose-invert mx-auto py-8 px-4">
+      <h1>{post.title}</h1>
+      <div className="text-muted-foreground mb-8">
+        <time>{post.date}</time>
+      </div>
+      <div dangerouslySetInnerHTML={{ __html: post.content }} />
     </article>
   )
 } 
