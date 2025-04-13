@@ -15,6 +15,7 @@ export interface Post {
   excerpt?: string
   slug: string
   category: string
+  coverImage?: string
 }
 
 export function getSortedPostsData(): Post[] {
@@ -40,6 +41,7 @@ export function getSortedPostsData(): Post[] {
       slug: id,
       excerpt,
       category: matterResult.data.category || 'General',
+      coverImage: matterResult.data.coverImage,
       ...(matterResult.data as { date: string; title: string; description: string }),
       content: matterResult.content,
     }
@@ -77,6 +79,7 @@ export async function getPostData(id: string): Promise<Post> {
     slug: id,
     excerpt,
     category: matterResult.data.category || 'General',
+    coverImage: matterResult.data.coverImage,
     content: contentHtml,
     ...(matterResult.data as { date: string; title: string; description: string }),
   }

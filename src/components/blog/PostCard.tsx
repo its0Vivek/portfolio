@@ -1,15 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-
-interface Post {
-  title: string
-  date: string
-  slug: string
-  excerpt: string
-  coverImage?: string
-  category: string
-  tags?: string[]
-}
+import { Post } from '@/lib/blog'
 
 export default function PostCard({ post }: { post: Post }) {
   return (
@@ -31,23 +22,13 @@ export default function PostCard({ post }: { post: Post }) {
           </span>
         </div>
         <h2 className="text-2xl font-bold mb-2 text-foreground hover:text-primary transition-colors">
-          <Link href={`/posts/${post.slug}`}>{post.title}</Link>
+          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
         </h2>
         <p className="text-muted-foreground text-sm mb-4">{post.date}</p>
         <p className="text-foreground/80 flex-1">{post.excerpt}</p>
-        <div className="mt-4 space-y-4">
-          <div className="flex flex-wrap gap-2">
-            {post.tags?.map((tag) => (
-              <span
-                key={tag}
-                className="px-2 py-1 bg-muted text-muted-foreground rounded text-sm"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
+        <div className="mt-4">
           <Link
-            href={`/posts/${post.slug}`}
+            href={`/blog/${post.slug}`}
             className="text-primary hover:text-primary/80 font-medium inline-block"
           >
             Read more →
