@@ -1,99 +1,118 @@
-import React from 'react';
-import Link from 'next/link';
+'use client'
 
-export default function PostsPage() {
+import { useState, useEffect } from 'react'
+import PostCard from '@/components/blog/PostCard'
+import SearchBar from '@/components/blog/SearchBar'
+
+interface Post {
+  slug: string
+  title: string
+  date: string
+  content: string
+  excerpt: string
+  coverImage?: string
+  category: string
+  tags: string[]
+}
+
+export default function Posts() {
+  const [allPosts, setAllPosts] = useState<Post[]>([])
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/posts')
+        if (!response.ok) {
+          const errorData = await response.json()
+          throw new Error(errorData.error || 'Failed to fetch posts')
+        }
+        const data = await response.json()
+        if (Array.isArray(data)) {
+          setAllPosts(data)
+          setFilteredPosts(data)
+        } else if (data.error) {
+          throw new Error(data.error)
+        } else {
+          throw new Error('Invalid response format')
+        }
+      } catch (error) {
+        console.error('Failed to fetch posts:', error)
+        setError(error instanceof Error ? error.message : 'Failed to load posts')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchPosts()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <main className="min-h-screen">
+        <div className="container mx-auto px-4 py-12">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl font-bold mb-4">Posts</h1>
+            <p className="text-muted-foreground mb-8">Loading posts...</p>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  if (error) {
+    return (
+      <main className="min-h-screen">
+        <div className="container mx-auto px-4 py-12">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl font-bold mb-4">Posts</h1>
+            <p className="text-red-500 mb-8">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  const categories = Array.from(new Set(allPosts.map(post => post.category)))
+  const tags = Array.from(new Set(allPosts.flatMap(post => post.tags)))
+
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold mb-8 text-zinc-100">Blog Posts</h1>
-      
-      <div className="grid gap-8">
-        {/* Post Item 1 */}
-        <article className="bg-[#1a1a1a] rounded-lg shadow-md p-6 border border-zinc-800">
-          <div className="mb-4">
-            <div className="text-sm text-zinc-400 mb-2">March 15, 2023</div>
-            <h2 className="text-2xl font-semibold mb-2">
-              <Link href="/posts/first-post" className="text-zinc-100 hover:text-purple-500 transition-colors">
-                Getting Started with Next.js and TypeScript
-              </Link>
-            </h2>
-            <p className="text-zinc-400 mb-4">
-              A comprehensive guide to setting up a new Next.js project with TypeScript, including best practices and common pitfalls to avoid.
-            </p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="px-3 py-1 bg-zinc-800 text-zinc-100 rounded-full text-sm">
-                Next.js
-              </span>
-              <span className="px-3 py-1 bg-zinc-800 text-zinc-100 rounded-full text-sm">
-                TypeScript
-              </span>
-              <span className="px-3 py-1 bg-zinc-800 text-zinc-100 rounded-full text-sm">
-                React
-              </span>
-            </div>
-            <Link href="/posts/first-post" className="text-purple-500 hover:text-purple-400">
-              Read more →
-            </Link>
+    <main className="min-h-screen">
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold mb-4">Posts</h1>
+          <p className="text-muted-foreground mb-8">
+            Here I share my thoughts on software development, game development, and my journey in tech.
+          </p>
+
+          <SearchBar
+            posts={allPosts}
+            onSearch={setFilteredPosts}
+            categories={categories}
+            tags={tags}
+          />
+          
+          <div className="grid grid-cols-1 gap-8">
+            {filteredPosts.length > 0 ? (
+              filteredPosts.map((post) => (
+                <PostCard key={post.slug} post={post} />
+              ))
+            ) : (
+              <p className="text-muted-foreground text-center py-8">
+                No posts found matching your criteria.
+              </p>
+            )}
           </div>
-        </article>
-        
-        {/* Post Item 2 */}
-        <article className="bg-[#1a1a1a] rounded-lg shadow-md p-6 border border-zinc-800">
-          <div className="mb-4">
-            <div className="text-sm text-zinc-400 mb-2">February 28, 2023</div>
-            <h2 className="text-2xl font-semibold mb-2">
-              <Link href="/posts/second-post" className="text-zinc-100 hover:text-purple-500 transition-colors">
-                Building Responsive UIs with Tailwind CSS
-              </Link>
-            </h2>
-            <p className="text-zinc-400 mb-4">
-              Learn how to create beautiful, responsive user interfaces using Tailwind CSS. This post covers the basics and advanced techniques.
-            </p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="px-3 py-1 bg-zinc-800 text-zinc-100 rounded-full text-sm">
-                CSS
-              </span>
-              <span className="px-3 py-1 bg-zinc-800 text-zinc-100 rounded-full text-sm">
-                Tailwind
-              </span>
-              <span className="px-3 py-1 bg-zinc-800 text-zinc-100 rounded-full text-sm">
-                Responsive Design
-              </span>
-            </div>
-            <Link href="/posts/second-post" className="text-purple-500 hover:text-purple-400">
-              Read more →
-            </Link>
-          </div>
-        </article>
-        
-        {/* Post Item 3 */}
-        <article className="bg-[#1a1a1a] rounded-lg shadow-md p-6 border border-zinc-800">
-          <div className="mb-4">
-            <div className="text-sm text-zinc-400 mb-2">January 10, 2023</div>
-            <h2 className="text-2xl font-semibold mb-2">
-              <Link href="/posts/third-post" className="text-zinc-100 hover:text-purple-500 transition-colors">
-                State Management in React Applications
-              </Link>
-            </h2>
-            <p className="text-zinc-400 mb-4">
-              A deep dive into different state management solutions for React applications, from useState to Redux and everything in between.
-            </p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="px-3 py-1 bg-zinc-800 text-zinc-100 rounded-full text-sm">
-                React
-              </span>
-              <span className="px-3 py-1 bg-zinc-800 text-zinc-100 rounded-full text-sm">
-                Redux
-              </span>
-              <span className="px-3 py-1 bg-zinc-800 text-zinc-100 rounded-full text-sm">
-                State Management
-              </span>
-            </div>
-            <Link href="/posts/third-post" className="text-purple-500 hover:text-purple-400">
-              Read more →
-            </Link>
-          </div>
-        </article>
+        </div>
       </div>
-    </div>
-  );
+    </main>
+  )
 } 

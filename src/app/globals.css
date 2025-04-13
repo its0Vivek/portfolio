@@ -5,7 +5,7 @@
 :root {
   --background: 17, 17, 17;
   --foreground: 255, 255, 255;
-  --card: 26, 26, 26;
+  --card: 38, 38, 38;
   --card-foreground: 255, 255, 255;
   --primary: 139, 92, 246;
   --primary-foreground: 255, 255, 255;
@@ -31,6 +31,19 @@
 
   body {
     @apply bg-[#111111] text-zinc-100;
+  }
+
+  select {
+    @apply bg-[#262626] text-zinc-100 border border-zinc-800 rounded-lg px-3 py-2 appearance-none cursor-pointer;
+  }
+
+  select:focus {
+    @apply outline-none ring-2 ring-purple-500/20;
+  }
+
+  /* Style for dropdown options */
+  select option {
+    @apply bg-[#262626] text-zinc-100;
   }
 }
 
