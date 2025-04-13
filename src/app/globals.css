@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 17, 17, 17;
+  --foreground: 255, 255, 255;
+  --card: 26, 26, 26;
+  --card-foreground: 255, 255, 255;
+  --primary: 139, 92, 246;
+  --primary-foreground: 255, 255, 255;
+  --secondary: 38, 38, 38;
+  --secondary-foreground: 255, 255, 255;
+  --accent: 38, 38, 38;
+  --accent-foreground: 255, 255, 255;
+  --muted: 38, 38, 38;
+  --muted-foreground: 163, 163, 163;
+  --border: 64, 64, 64;
+  --input: 64, 64, 64;
+  --ring: 139, 92, 246;
+}
+
+@layer base {
+  ::selection {
+    @apply bg-purple-500/30;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  body {
+    @apply bg-[#111111] text-zinc-100;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+} 
