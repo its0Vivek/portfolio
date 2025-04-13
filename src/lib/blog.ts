@@ -14,6 +14,7 @@ export interface Post {
   description?: string
   excerpt?: string
   slug: string
+  category: string
 }
 
 export function getSortedPostsData(): Post[] {
@@ -38,6 +39,7 @@ export function getSortedPostsData(): Post[] {
       id,
       slug: id,
       excerpt,
+      category: matterResult.data.category || 'General',
       ...(matterResult.data as { date: string; title: string; description: string }),
       content: matterResult.content,
     }
@@ -74,6 +76,7 @@ export async function getPostData(id: string): Promise<Post> {
     id,
     slug: id,
     excerpt,
+    category: matterResult.data.category || 'General',
     content: contentHtml,
     ...(matterResult.data as { date: string; title: string; description: string }),
   }
