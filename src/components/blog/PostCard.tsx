@@ -1,40 +1,27 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { Post } from '@/lib/blog'
 
-export default function PostCard({ post }: { post: Post }) {
+interface PostCardProps {
+  post: Post
+}
+
+export default function PostCard({ post }: PostCardProps) {
   return (
-    <article className="flex flex-col space-y-4 bg-card rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
-      {post.coverImage && (
-        <div className="relative w-full h-48">
-          <Image
-            src={post.coverImage}
-            alt={post.title}
-            fill
-            className="object-cover"
-          />
-        </div>
-      )}
-      <div className="p-6 flex-1 flex flex-col">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
-            {post.category}
-          </span>
-        </div>
-        <h2 className="text-2xl font-bold mb-2 text-foreground hover:text-primary transition-colors">
-          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+    <Link 
+      href={`/posts/${post.slug}`}
+      className="block p-6 rounded-[20px] bg-[#0C0C0C] hover:bg-[#141414] transition-colors border border-[#1C1C1C]"
+    >
+      <article className="space-y-3">
+        <h2 className="text-xl font-semibold text-white">
+          {post.title}
         </h2>
-        <p className="text-muted-foreground text-sm mb-4">{post.date}</p>
-        <p className="text-foreground/80 flex-1">{post.excerpt}</p>
-        <div className="mt-4">
-          <Link
-            href={`/blog/${post.slug}`}
-            className="text-primary hover:text-primary/80 font-medium inline-block"
-          >
-            Read more →
-          </Link>
+        <p className="text-[#888] text-[15px] leading-relaxed">
+          {post.excerpt}
+        </p>
+        <div className="text-[#888] text-sm">
+          <span>{post.readingTime} read</span>
         </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   )
 } 

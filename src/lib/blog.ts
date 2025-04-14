@@ -14,6 +14,8 @@ export interface Post {
   readingTime: string
   content?: string
   coverImage?: string
+  category?: string
+  tags?: string[]
 }
 
 export function getSortedPostsData(): Post[] {
