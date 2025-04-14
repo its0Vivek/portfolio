@@ -1,118 +1,52 @@
-'use client'
+import { getSortedPostsData, Post } from '@/lib/blog'
+import Link from 'next/link'
 
-import { useState, useEffect } from 'react'
-import PostCard from '@/components/blog/PostCard'
-import SearchBar from '@/components/blog/SearchBar'
-
-interface Post {
-  slug: string
-  title: string
-  date: string
-  content: string
-  excerpt: string
-  coverImage?: string
-  category: string
-  tags: string[]
+export const metadata = {
+  title: 'Posts | Vivek Mali',
+  description: 'Read my thoughts on game development and programming.',
 }
 
-export default function Posts() {
-  const [allPosts, setAllPosts] = useState<Post[]>([])
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+interface PostCardProps {
+  post: Post
+}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch('/api/posts')
-        if (!response.ok) {
-          const errorData = await response.json()
-          throw new Error(errorData.error || 'Failed to fetch posts')
-        }
-        const data = await response.json()
-        if (Array.isArray(data)) {
-          setAllPosts(data)
-          setFilteredPosts(data)
-        } else if (data.error) {
-          throw new Error(data.error)
-        } else {
-          throw new Error('Invalid response format')
-        }
-      } catch (error) {
-        console.error('Failed to fetch posts:', error)
-        setError(error instanceof Error ? error.message : 'Failed to load posts')
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchPosts()
-  }, [])
-
-  if (isLoading) {
-    return (
-      <main className="min-h-screen">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold mb-4">Posts</h1>
-            <p className="text-muted-foreground mb-8">Loading posts...</p>
-          </div>
+function PostCard({ post }: PostCardProps) {
+  return (
+    <Link 
+      href={`/posts/${post.slug}`}
+      className="block p-6 rounded-[20px] bg-[#0C0C0C] hover:bg-[#141414] transition-colors border border-[#1C1C1C]"
+    >
+      <article className="space-y-3">
+        <h2 className="text-xl font-semibold text-white">
+          {post.title}
+        </h2>
+        <p className="text-[#888] text-[15px] leading-relaxed">
+          {post.excerpt}
+        </p>
+        <div className="text-[#888] text-sm">
+          <span>{post.readingTime} read</span>
         </div>
-      </main>
-    )
-  }
+      </article>
+    </Link>
+  )
+}
 
-  if (error) {
-    return (
-      <main className="min-h-screen">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold mb-4">Posts</h1>
-            <p className="text-red-500 mb-8">{error}</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-      </main>
-    )
-  }
-
-  const categories = Array.from(new Set(allPosts.map(post => post.category)))
-  const tags = Array.from(new Set(allPosts.flatMap(post => post.tags)))
+export default function PostsPage() {
+  const posts = getSortedPostsData()
 
   return (
-    <main className="min-h-screen">
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold mb-4">Posts</h1>
-          <p className="text-muted-foreground mb-8">
-            Here I share my thoughts on software development, game development, and my journey in tech.
-          </p>
+    <div className="min-h-screen bg-[#111111]">
+      <div className="max-w-[1400px] mx-auto px-8 py-16">
+        <div className="mb-12">
+          <h1 className="text-3xl font-bold text-white mb-8">All posts</h1>
+        </div>
 
-          <SearchBar
-            posts={allPosts}
-            onSearch={setFilteredPosts}
-            categories={categories}
-            tags={tags}
-          />
-          
-          <div className="grid grid-cols-1 gap-8">
-            {filteredPosts.length > 0 ? (
-              filteredPosts.map((post) => (
-                <PostCard key={post.slug} post={post} />
-              ))
-            ) : (
-              <p className="text-muted-foreground text-center py-8">
-                No posts found matching your criteria.
-              </p>
-            )}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <PostCard key={post.slug} post={post} />
+          ))}
         </div>
       </div>
-    </main>
+    </div>
   )
-} 
+}
