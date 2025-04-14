@@ -1,7 +1,7 @@
 export default function Contact() {
   return (
     <div className="min-h-screen px-4 pt-16">
-      <div className="w-full max-w-3xl mx-auto bg-zinc-900/50 border border-zinc-800 rounded-xl p-8 hover:border-purple-500 transition-all">
+      <div className="w-full max-w-3xl mx-auto bg-black border border-zinc-800 rounded-xl p-8 hover:border-purple-500 transition-all">
         <h1 className="text-3xl font-bold text-white mb-3 text-center">Contact me</h1>
         <p className="text-zinc-400 mb-8 text-center">
           You can contact me via Email, Discord or Instagram. I usually respond within a day.
@@ -9,7 +9,7 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Discord */}
-          <div className="flex flex-col items-center p-4 rounded-lg bg-zinc-800/50 hover:bg-zinc-800 transition-all">
+          <div className="flex flex-col items-center p-4 rounded-lg bg-black hover:bg-zinc-900 transition-all">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -25,7 +25,7 @@ export default function Contact() {
           </div>
 
           {/* Email */}
-          <div className="flex flex-col items-center p-4 rounded-lg bg-zinc-800/50 hover:bg-zinc-800 transition-all">
+          <div className="flex flex-col items-center p-4 rounded-lg bg-black hover:bg-zinc-900 transition-all">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -46,7 +46,7 @@ export default function Contact() {
           </div>
 
           {/* Instagram */}
-          <div className="flex flex-col items-center p-4 rounded-lg bg-zinc-800/50 hover:bg-zinc-800 transition-all">
+          <div className="flex flex-col items-center p-4 rounded-lg bg-black hover:bg-zinc-900 transition-all">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
