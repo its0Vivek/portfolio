@@ -17,13 +17,15 @@ export default function SearchBar({ posts, onSearch, categories, tags }: SearchB
 
   const handleSearch = (term: string, category: string, tag: string) => {
     const filtered = posts.filter((post) => {
+      const searchLower = term.toLowerCase()
       const matchesTerm =
         term === '' ||
-        post.title.toLowerCase().includes(term.toLowerCase()) ||
-        post.content.toLowerCase().includes(term.toLowerCase())
+        post.title.toLowerCase().includes(searchLower) ||
+        post.excerpt.toLowerCase().includes(searchLower) ||
+        (post.content?.toLowerCase().includes(searchLower) ?? false)
 
       const matchesCategory = category === '' || post.category === category
-      const matchesTag = tag === '' || post.tags.includes(tag)
+      const matchesTag = tag === '' || (post.tags?.includes(tag) ?? false)
 
       return matchesTerm && matchesCategory && matchesTag
     })
