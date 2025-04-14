@@ -1,6 +1,6 @@
-# My Portfolio
+# Game Developer Portfolio
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS.
+A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. Features a dark theme, blog system, and animated UI components.
 
 ## About Me
 
@@ -13,22 +13,25 @@ Hi 👋, I'm Vivek Mali
 ## Features
 
 - 🎮 Game Development Showcase
-- 🎨 Modern and clean design
-- 🌙 Dark theme optimized
-- 📱 Fully responsive
-- ⚡ Fast and optimized performance
+- 📝 Blog System with Markdown Support
+- 🌙 Dark Theme
+- 💫 Smooth Animations
+- 📱 Fully Responsive Design
+- 🎨 Modern UI/UX
+- ⚡ Fast Performance
 - 🎯 SEO friendly
 - 📝 Blog section
-- 💼 Projects showcase
+- �� Projects showcase
 - 👨‍💻 Work experience
 - 📧 Contact section
 
 ## Tech Stack
 
-- [Next.js](https://nextjs.org/) - React framework
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [Tailwind Typography](https://github.com/tailwindlabs/tailwindcss-typography) - Blog content styling
+- **Framework**: Next.js 14
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Content**: Markdown
+- **Deployment**: Vercel
 
 ## Getting Started
 
@@ -53,27 +56,47 @@ npm run dev
 ## Project Structure
 
 ```
-portfolio/
-├── src/
-│   ├── app/              # App router pages
-│   │   ├── about/        # About page
-│   │   ├── work/         # Work experience
-│   │   ├── projects/     # Projects showcase
-│   │   ├── posts/        # Blog posts
-│   │   └── contact/      # Contact page
-│   ├── components/       # React components
-│   └── styles/          # Global styles
-├── public/              # Static assets
-└── package.json        # Dependencies
+├── docs/               # Documentation
+├── posts/             # Blog posts (Markdown)
+├── public/            # Static assets
+└── src/
+    ├── app/          # Next.js app router pages
+    ├── components/   # React components
+    ├── lib/          # Utility functions
+    └── styles/       # Global styles
 ```
+
+## Writing Blog Posts
+
+This portfolio includes a blog system that supports Markdown posts with frontmatter. For detailed instructions on writing and publishing blog posts, see the [Blog Writing Guide](docs/BLOG_GUIDE.md).
+
+### Quick Start for Blog Posts
+
+1. Create a new `.md` file in the `posts` directory
+2. Add required frontmatter (title, date, excerpt, etc.)
+3. Write your content in Markdown
+4. The blog will automatically update
 
 ## Customization
 
-1. Update your personal information in the respective components
-2. Modify the color scheme in `globals.css`
-3. Add your projects in the Projects section
-4. Write your blog posts in the Posts section
-5. Update your work experience in the Work section
+1. **Personal Information**: Update `src/app/layout.tsx` with your name and metadata
+2. **Projects**: Modify `src/app/projects/page.tsx` to add your projects
+3. **Skills**: Update `src/app/work/page.tsx` with your skills
+4. **Contact**: Edit `src/app/contact/page.tsx` with your contact information
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Next.js Team for the amazing framework
+- Vercel for hosting
+- All contributors and users of this template
 
 ## Deployment
 
@@ -82,10 +105,6 @@ The easiest way to deploy your portfolio is to use the [Vercel Platform](https:/
 1. Push your code to GitHub
 2. Import your project to Vercel
 3. Vercel will detect Next.js and set up the build configuration automatically
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
 
 ## Contact
 
