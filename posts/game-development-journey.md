@@ -1,9 +1,8 @@
 ---
-title: 'My Journey into Game Development'
-date: '2024-04-12'
-category: 'Game Development'
-tags: ['Unity', 'C#', 'Game Design', 'Learning']
-coverImage: '/images/blog/game-dev.jpg'
+title: My Journey into Game Development
+date: 2024-04-12
+excerpt: Starting my journey in game development has been an exciting adventure. From learning Unity to understanding game design principles, every step has been a new discovery.
+readingTime: 6 minutes
 ---
 
 Starting my journey in game development has been an exciting adventure. From learning Unity to understanding game design principles, every step has been a new discovery.

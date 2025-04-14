@@ -1,9 +1,8 @@
 ---
-title: 'Hello World - Welcome to My Blog'
-date: '2024-04-13T12:00:00Z'
-category: 'General'
-tags: ['Introduction', 'Web Development', 'Personal']
-coverImage: '/images/blog/hello.jpg'
+title: Hello World - Welcome to My Blog
+date: 2024-04-13
+excerpt: Welcome to my blog! This is where I'll share my thoughts on software development, game development, and my journey in tech.
+readingTime: 3 minutes
 ---
 
 Welcome to my blog! This is where I'll share my thoughts on software development, game development, and my journey in tech.
