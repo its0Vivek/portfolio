@@ -5,6 +5,7 @@ import './globals.css'
 import { Navigation } from '@/components/Navigation'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import CustomCursor from '@/components/CustomCursor'
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({ subsets: ['latin'] })
 const pacifico = Pacifico({
@@ -37,6 +38,7 @@ export default function RootLayout({
           <main className="flex-1">
             {children}
           </main>
+          <Analytics />
           <footer className="border-t border-zinc-200 dark:border-white/10 mt-16">
             <div className="max-w-4xl mx-auto px-4 py-8">
               <div className="flex justify-between items-center">
