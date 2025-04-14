@@ -4,6 +4,7 @@ import { Inter, Pacifico, Poppins } from 'next/font/google'
 import './globals.css'
 import { Navigation } from '@/components/Navigation'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import CustomCursor from '@/components/CustomCursor'
 
 const inter = Inter({ subsets: ['latin'] })
 const pacifico = Pacifico({
@@ -31,6 +32,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} bg-white dark:bg-[#111111] text-zinc-900 dark:text-white min-h-screen flex flex-col transition-colors duration-200`}>
         <ThemeProvider>
+          <CustomCursor />
           <Navigation pacifico={pacifico.className} poppins={poppins.className} />
           <main className="flex-1">
             {children}

@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  cursor: none !important;
+}
+
+a, button, [role="button"], select, input[type="submit"], input[type="image"] {
+  cursor: none;
+}
+
 :root {
   --background: 17, 17, 17;
   --foreground: 255, 255, 255;
