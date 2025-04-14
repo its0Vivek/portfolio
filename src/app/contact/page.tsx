@@ -9,7 +9,12 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Discord */}
-          <div className="flex flex-col items-center p-4 rounded-lg bg-black hover:bg-zinc-900 transition-all">
+          <a 
+            href="https://discord.com/users/Vivek#6163" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex flex-col items-center p-4 rounded-lg bg-black hover:bg-zinc-900 transition-all"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -22,10 +27,13 @@ export default function Contact() {
             </svg>
             <h2 className="font-medium text-white mb-1">Discord</h2>
             <p className="text-zinc-400 text-sm">vivek._.mali</p>
-          </div>
+          </a>
 
           {/* Email */}
-          <div className="flex flex-col items-center p-4 rounded-lg bg-black hover:bg-zinc-900 transition-all">
+          <a 
+            href="mailto:vivekmali108@gmail.com"
+            className="flex flex-col items-center p-4 rounded-lg bg-black hover:bg-zinc-900 transition-all"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -43,10 +51,15 @@ export default function Contact() {
             </svg>
             <h2 className="font-medium text-white mb-1">Email</h2>
             <p className="text-zinc-400 text-sm">vivekmali108@gmail.com</p>
-          </div>
+          </a>
 
           {/* Instagram */}
-          <div className="flex flex-col items-center p-4 rounded-lg bg-black hover:bg-zinc-900 transition-all">
+          <a 
+            href="https://instagram.com/vivek._.mali" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex flex-col items-center p-4 rounded-lg bg-black hover:bg-zinc-900 transition-all"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -65,7 +78,7 @@ export default function Contact() {
             </svg>
             <h2 className="font-medium text-white mb-1">Instagram</h2>
             <p className="text-zinc-400 text-sm">vivek._.mali</p>
-          </div>
+          </a>
         </div>
       </div>
     </div>
