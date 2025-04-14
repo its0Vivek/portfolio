@@ -7,14 +7,12 @@ import html from 'remark-html'
 const postsDirectory = path.join(process.cwd(), 'posts')
 
 export interface Post {
-  id: string
-  title: string
-  date: string
-  content: string
-  description?: string
-  excerpt?: string
   slug: string
-  category: string
+  title: string
+  excerpt: string
+  date: string
+  readingTime: string
+  content?: string
   coverImage?: string
 }
 
@@ -23,7 +21,7 @@ export function getSortedPostsData(): Post[] {
   const fileNames = fs.readdirSync(postsDirectory)
   const allPostsData = fileNames.map((fileName) => {
     // Remove ".md" from file name to get id
-    const id = fileName.replace(/\.md$/, '')
+    const slug = fileName.replace(/\.md$/, '')
 
     // Read markdown file as string
     const fullPath = path.join(postsDirectory, fileName)
@@ -32,18 +30,10 @@ export function getSortedPostsData(): Post[] {
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents)
 
-    // Create excerpt from content if not provided in frontmatter
-    const excerpt = matterResult.data.excerpt || matterResult.content.slice(0, 200) + '...'
-
     // Combine the data with the id
     return {
-      id,
-      slug: id,
-      excerpt,
-      category: matterResult.data.category || 'General',
-      coverImage: matterResult.data.coverImage,
-      ...(matterResult.data as { date: string; title: string; description: string }),
-      content: matterResult.content,
+      slug,
+      ...(matterResult.data as Omit<Post, 'slug' | 'content'>),
     }
   })
 
@@ -57,30 +47,23 @@ export function getSortedPostsData(): Post[] {
   })
 }
 
-export async function getPostData(id: string): Promise<Post> {
-  const fullPath = path.join(postsDirectory, `${id}.md`)
+export async function getPostData(slug: string): Promise<Post> {
+  const fullPath = path.join(postsDirectory, `${slug}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
 
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents)
 
-  // Create excerpt from content if not provided in frontmatter
-  const excerpt = matterResult.data.excerpt || matterResult.content.slice(0, 200) + '...'
-
   // Use remark to convert markdown into HTML string
   const processedContent = await remark()
     .use(html)
     .process(matterResult.content)
-  const contentHtml = processedContent.toString()
+  const content = processedContent.toString()
 
   // Combine the data with the id and contentHtml
   return {
-    id,
-    slug: id,
-    excerpt,
-    category: matterResult.data.category || 'General',
-    coverImage: matterResult.data.coverImage,
-    content: contentHtml,
-    ...(matterResult.data as { date: string; title: string; description: string }),
+    slug,
+    content,
+    ...(matterResult.data as Omit<Post, 'slug' | 'content'>),
   }
 } 
